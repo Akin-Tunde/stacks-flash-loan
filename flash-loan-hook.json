@@ -1,0 +1,12 @@
+{
+  "name": "Flash Loan Fee Tracker",
+  "network": "mainnet",
+  "if_this": {
+    "scope": "print_event",
+    "contract_identifier": "ST1PQ...GGM.flasher",
+    "contains": "flash-loan-executed"
+  },
+  "then_that": {
+    "http_endpoint": "https://api.your-app.com/webhooks/flash-loans"
+  }
+}

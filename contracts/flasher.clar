@@ -109,3 +109,29 @@
         return-amount
     )
 )
+
+
+;; Define a new constant for the event name
+(define-constant EVENT_FLASH_LOAN "flash-loan-executed")
+
+(define-public (flash-stx (amount uint) (recipient <stx-flasher>))
+    (let (
+        (original-stx-balance (stx-get-balance THIS_CONTRACT))
+        (return-amount (get-return-amount amount STX_FLASH_FEES_PIPS))
+        (interest-amount (- return-amount amount))
+        ;; ... rest of your existing logic ...
+    )
+    ;; ... after successful repayment check ...
+    
+    ;; EMIT EVENT FOR CHAINHOOK
+    (print {
+        event: EVENT_FLASH_LOAN,
+        asset: "STX",
+        borrower: tx-sender,
+        recipient: (contract-of recipient),
+        amount: amount,
+        fees: interest-amount
+    })
+    
+    (ok true))
+)
